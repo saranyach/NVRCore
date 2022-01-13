@@ -22,25 +22,32 @@ namespace NVRCore.Controllers
         {
             this.customerRepository = new CustomerRepository();
         }
-       
+       /// <summary>
+       /// Gets a list of Customers
+       /// </summary>
+       /// <returns>List of Customers</returns>
         [HttpGet]
         public List<Customer> Get()
         {
             return customerRepository.GetCustomers();
-
         }
 
+        /// <summary>
+        /// Created a new Customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Post(Customer customer)
         {
             HttpResponseMessage responseMessage;
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //Check for Model Validations
             {
                 try
                 {
                     customerRepository.SaveCustomer(customer);
                     responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
+                    {                        
                         Content = new StringContent("Customer " + customer.FirstName + " " + customer.LastName + " added.")
                     };
                     return responseMessage;
